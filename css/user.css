@@ -87,7 +87,6 @@ h1, h2 {
     align-items: start; 
 }
 
-/* Стили для формы опроса внутри карточки */
 .poll-form {
     margin-top: 10px;
     border-top: 1px solid #eee;
@@ -103,7 +102,7 @@ h1, h2 {
 .options-group {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Отступ между вариантами */
+    gap: 8px; 
 }
 
 .option-item {
@@ -127,7 +126,7 @@ h1, h2 {
 .option-item input[type="radio"] {
     margin: 0;
     cursor: pointer;
-    width: auto; /* Сброс ширины из стилей модалок */
+    width: auto;
 }
 
 .submit-vote-btn {

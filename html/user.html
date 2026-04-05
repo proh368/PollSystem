@@ -28,11 +28,9 @@
     <p>Описание опроса, которое хранится в поле Description таблицы Polls.</p>
     
     <form class="poll-form">
-        <!-- Блок вопроса из таблицы Questions -->
         <div class="question-block">
             <p class="question-text"><strong>Вопрос:</strong> Текст вопроса из БД?</p>
             
-            <!-- Варианты из таблицы Options -->
             <div class="options-group">
                 <label class="option-item">
                     <input type="radio" name="poll_1_question_1" value="opt_1" required>
@@ -49,7 +47,6 @@
             </div>
         </div>
 
-        <!-- Кнопка отправки для создания записи в Votes -->
         <button type="submit" class="btn submit-vote-btn">Проголосовать</button>
     </form>
 </article>
@@ -59,11 +56,9 @@
     <p>Описание опроса, которое хранится в поле Description таблицы Polls.</p>
     
     <form class="poll-form">
-        <!-- Блок вопроса из таблицы Questions -->
         <div class="question-block">
             <p class="question-text"><strong>Вопрос:</strong> Текст вопроса из БД?</p>
             
-            <!-- Варианты из таблицы Options -->
             <div class="options-group">
                 <label class="option-item">
                     <input type="radio" name="poll_1_question_1" value="opt_1" required>
@@ -80,7 +75,6 @@
             </div>
         </div>
 
-        <!-- Кнопка отправки для создания записи в Votes -->
         <button type="submit" class="btn submit-vote-btn">Проголосовать</button>
     </form>
 </article>
@@ -130,7 +124,7 @@
             <label>Логин:</label>
             <input type="text" id="profileUser" required>
             
-            <label>Новый пароль (оставьте пустым, если не хотите менять):</label>
+            <label>Новый пароль:</label>
             <input type="password" id="profilePass" placeholder="••••••••">
             
             <button type="submit" class="btn" style="background-color: #f39c12;">Сохранить изменения</button>

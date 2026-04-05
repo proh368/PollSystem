@@ -1,8 +1,12 @@
-// Функции открытия/закрытия модалок
 function openModal(id) { document.getElementById(id).style.display = "block"; }
 function closeModal(id) { document.getElementById(id).style.display = "none"; }
 
-// Проверка сессии при загрузке
+window.onclick = function(event) {
+    if (event.target.className === 'modal') {
+        event.target.style.display = "none";
+    }
+}
+
 window.addEventListener('DOMContentLoaded', () => {
     const user = JSON.parse(localStorage.getItem('userSession'));
     const nameDisplay = document.getElementById('userNameDisplay');
@@ -12,15 +16,16 @@ window.addEventListener('DOMContentLoaded', () => {
     if (user) {
         nameDisplay.innerText = "Привет, " + user.name + "!";
         authBtn.innerText = "Выйти";
-        if (user.role === 'Admin') adminBtn.style.display = "inline-block";
+        // Показываем кнопку админки, если роль Admin
+        if (user.role === 'Admin' && adminBtn) adminBtn.style.display = "inline-block";
     } else {
         nameDisplay.innerText = "Привет, Гость!";
         authBtn.innerText = "Войти";
-        adminBtn.style.display = "none";
+        if (adminBtn) adminBtn.style.display = "none";
     }
 });
 
-// Обработка кнопки Войти/Выйти
+// Кнопка Войти/Выйти
 function handleAuthClick() {
     if (localStorage.getItem('userSession')) {
         if (confirm('Выйти из аккаунта?')) {
@@ -32,56 +37,86 @@ function handleAuthClick() {
     }
 }
 
-// Имитация Входа
-document.getElementById('loginForm').onsubmit = function(e) {
-    e.preventDefault();
-    const name = document.getElementById('loginUser').value;
-    const pass = document.getElementById('loginPass').value;
-    
-    // В будущем тут будет запрос к Flask API
-    const userData = { name: name, password: pass, role: 'Admin' }; 
-    localStorage.setItem('userSession', JSON.stringify(userData));
-    location.reload();
-};
+// ВХОД
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+    loginForm.onsubmit = async function(e) {
+        e.preventDefault();
+        const username = document.getElementById('loginUser').value;
+        const password = document.getElementById('loginPass').value;
 
-// Имитация Регистрации
-document.getElementById('regForm').onsubmit = function(e) {
-    e.preventDefault();
-    alert("Регистрация успешна! Теперь войдите.");
-    closeModal('regModal');
-    openModal('loginModal');
-};
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await response.json();
 
-
-
-async function loadUsersToAdminTable() {
-    const tableBody = document.querySelector('.user-list-table tbody');
-    if (!tableBody) return; // Если мы не на странице админа, выходим
-
-    const response = await fetch('/api/users');
-    const users = await response.json();
-
-    // Очищаем таблицу от старых данных
-    tableBody.innerHTML = '';
-
-    // Вставляем новые строки из базы
-    users.forEach(user => {
-        const row = `
-            <tr>
-                <td>${user.Id}</td>
-                <td>${user.Username}</td>
-                <td><span class="role-badge ${user.Role.toLowerCase()}">${user.Role}</span></td>
-                <td style="text-align: right;">
-                    <a href="#" class="btn-edit">Ред.</a>
-                    <a href="#" class="btn-delete" onclick="deleteUser(${user.Id})">Удалить</a>
-                </td>
-            </tr>`;
-        tableBody.innerHTML += row;
-    });
+            if (response.ok) {
+                localStorage.setItem('userSession', JSON.stringify({ name: data.name, role: data.role }));
+                location.reload();
+            } else {
+                alert("Ошибка: " + data.error);
+            }
+        } catch (err) {
+            alert("Сервер не отвечает");
+        }
+    };
 }
 
-// Запускаем загрузку, если мы в админке
+// РЕГИСТРАЦИЯ
+const regForm = document.getElementById('regForm');
+if (regForm) {
+    regForm.onsubmit = async function(e) {
+        e.preventDefault();
+        const username = document.getElementById('regUser').value;
+        const password = document.getElementById('regPass').value;
+
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Регистрация успешна! Теперь войдите.");
+                closeModal('regModal');
+                openModal('loginModal');
+            } else {
+                alert("Ошибка: " + data.error);
+            }
+        } catch (err) {
+            alert("Ошибка при регистрации");
+        }
+    };
+}
+
+// ЗАГРУЗКА ПОЛЬЗОВАТЕЛЕЙ
+async function loadUsersToAdminTable() {
+    const tableBody = document.querySelector('.user-list-table tbody');
+    if (!tableBody) return;
+
+    try {
+        const response = await fetch('/api/users');
+        const users = await response.json();
+        tableBody.innerHTML = '';
+        users.forEach(user => {
+            tableBody.innerHTML += `
+                <tr>
+                    <td>${user.Id}</td>
+                    <td>${user.Username}</td>
+                    <td><span class="role-badge ${user.Role.toLowerCase()}">${user.Role}</span></td>
+                    <td style="text-align: right;">
+                        <a href="#" class="btn-delete" onclick="alert('Удаление ID: ${user.Id}')">Удалить</a>
+                    </td>
+                </tr>`;
+        });
+    } catch (e) { console.log("Ошибка загрузки таблицы"); }
+}
+
 if (window.location.pathname.includes('admin.html')) {
     loadUsersToAdminTable();
 }
-
