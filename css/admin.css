@@ -1,0 +1,186 @@
+.admin-section { 
+    margin-bottom: 50px; 
+}
+
+.card-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+}
+
+.card-form input, .card-form textarea, .card-form select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.admin-table th, .admin-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-table th { background-color: #eee; }
+
+.admin-table th:last-child, 
+.admin-table td:last-child {
+    text-align: right;
+}
+
+/* Стили заголовков секций */
+.admin-section h2 {
+    border-left: 5px solid var(--primary-color);
+    padding-left: 15px;
+    margin-top: 40px;
+    background: #eee;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.btn-delete { 
+    color: #e74c3c; 
+    text-decoration: none; 
+    margin-left: 10px; 
+    font-weight: bold; 
+}
+.btn-edit { 
+    color: #3498db; 
+    text-decoration: none; 
+    font-weight: bold; 
+}
+
+.btn-delete:hover, .btn-edit:hover { 
+    text-decoration: underline; 
+}
+
+
+
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .user-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .admin-link, .user-info a {
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    main {
+        padding: 0 10px;
+        margin-top: 1rem;
+    }
+
+    .admin-table, 
+    .admin-table thead, 
+    .admin-table tbody, 
+    .admin-table th, 
+    .admin-table td, 
+    .admin-table tr { 
+        display: block; 
+    }
+
+    .admin-table thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .admin-table tr {
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        background: white;
+        padding: 10px;
+        box-shadow: var(--shadow);
+    }
+
+    .admin-table td { 
+        border: none;
+        border-bottom: 1px solid #eee; 
+        position: relative;
+        padding-left: 50% !important;
+        text-align: right !important;
+    }
+
+    .admin-table td:last-child {
+        border-bottom: 0;
+    }
+
+    .admin-table td:before { 
+        position: absolute;
+        left: 15px;
+        width: 45%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: #666;
+    }
+
+    .q-list-table td:nth-of-type(1):before { content: "ID"; }
+    .q-list-table td:nth-of-type(2):before { content: "ID Опроса"; }
+    .q-list-table td:nth-of-type(3):before { content: "Текст"; }
+    .q-list-table td:nth-of-type(4):before { content: "Действия"; }
+
+
+    .opt-list-table td:nth-of-type(1):before { content: "ID"; }
+    .opt-list-table td:nth-of-type(2):before { content: "ID Вопроса"; }
+    .opt-list-table td:nth-of-type(3):before { content: "Текст"; }
+    .opt-list-table td:nth-of-type(4):before { content: "Действия"; }
+
+
+    .poll-list-table td:nth-of-type(1):before { content: "ID"; }
+    .poll-list-table td:nth-of-type(2):before { content: "Заголовок"; }
+    .poll-list-table td:nth-of-type(3):before { content: "Описание"; }
+    .poll-list-table td:nth-of-type(4):before { content: "Автор ID"; }
+    .poll-list-table td:nth-of-type(5):before { content: "Действия"; }
+
+
+    .vote-list-table td:nth-of-type(1):before { content: "ID"; }
+    .vote-list-table td:nth-of-type(2):before { content: "User ID"; }
+    .vote-list-table td:nth-of-type(3):before { content: "Opt ID"; }
+    .vote-list-table td:nth-of-type(4):before { content: "Дата"; }
+    .vote-list-table td:nth-of-type(5):before { content: "Действия"; }
+
+    
+    .user-list-table td:nth-of-type(1):before { content: "ID"; }
+    .user-list-table td:nth-of-type(2):before { content: "Логин"; }
+    .user-list-table td:nth-of-type(3):before { content: "Роль"; }
+    .user-list-table td:nth-of-type(4):before { content: "Хэш"; }
+    .user-list-table td:nth-of-type(5):before { content: "Действия"; }
+
+    .btn-edit, .btn-delete {
+        display: inline-block;
+        padding: 8px 0;
+        font-size: 1rem;
+    }
+}

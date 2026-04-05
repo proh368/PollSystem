@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система опросов</title>
+    <link rel="stylesheet" href="../css/user.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Панель администратора</div>
+            <div class="user-info">
+            <a href="user.html" class="admin-link" style="background-color: #2ecc71;">На сайт</a>
+            <span id="userNameDisplay" onclick="openModal('profileModal')" style="cursor:pointer; text-decoration: underline;">Привет, Гость!</span>
+        </div>
+        </nav>
+    </header>
+
+    <main>
+    <section class="admin-section">
+        <h2>1. Опросы (Polls)</h2>
+        <div class="card-form">
+            <h3>Создать опрос</h3>
+            <form action="/add_poll" method="POST">
+                <input type="text" name="title" placeholder="Заголовок" required>
+                <textarea name="description" placeholder="Описание"></textarea>
+                <input type="number" name="author_id" placeholder="ID Автора (Users.Id)" required>
+                <button type="submit" class="btn">Создать</button>
+            </form>
+        </div>
+        <div class="admin-table-container">
+            <table class="admin-table poll-list-table">
+                <thead>
+                    <tr><th>ID</th><th>Заголовок</th><th>Описание</th><th>Автор ID</th><th class="actions-cell">Действия</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td><td>Опрос о еде</td><td>Про завтраки</td><td>101</td>
+                        <td class="actions-cell">
+                            <a href="#" class="btn-edit">Ред.</a>
+                            <a href="#" class="btn-delete" onclick="return confirm('Удалить опрос?')">Удалить</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="admin-section">
+        <h2>2. Вопросы (Questions)</h2>
+        <div class="card-form">
+            <form action="/add_question" method="POST">
+                <input type="number" name="poll_id" placeholder="ID Опроса" required>
+                <input type="text" name="text" placeholder="Текст вопроса" required>
+                <button type="submit" class="btn">Добавить</button>
+            </form>
+        </div>
+        <div class="admin-table-container">
+            <table class="admin-table q-list-table">
+                <thead>
+                    <tr><th>ID</th><th>Poll ID</th><th>Текст вопроса</th><th class="actions-cell">Действия</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td><td>1</td><td>Что вы ели?</td>
+                        <td class="actions-cell">
+                            <a href="#" class="btn-edit">Ред.</a>
+                            <a href="#" class="btn-delete">Удалить</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="admin-section">
+        <h2>3. Варианты (Options)</h2>
+        <div class="card-form">
+            <form action="/add_option" method="POST">
+                <input type="number" name="question_id" placeholder="ID Вопроса" required>
+                <input type="text" name="text" placeholder="Текст варианта" required>
+                <button type="submit" class="btn">Добавить</button>
+            </form>
+        </div>
+        <div class="admin-table-container">
+            <table class="admin-table opt-list-table">
+                <thead>
+                    <tr><th>ID</th><th>Question ID</th><th>Текст ответа</th><th class="actions-cell">Действия</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td><td>1</td><td>Яичница</td>
+                        <td class="actions-cell">
+                            <a href="#" class="btn-edit">Ред.</a>
+                            <a href="#" class="btn-delete">Удалить</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="admin-section">
+        <h2>4. Голоса (Votes)</h2>
+        <div class="card-form">
+            <h3>Зарегистрировать голос вручную</h3>
+            <form action="/add_vote" method="POST">
+                <input type="number" name="user_id" placeholder="ID Пользователя" required>
+                <input type="number" name="option_id" placeholder="ID Варианта" required>
+                <button type="submit" class="btn">Добавить голос</button>
+            </form>
+        </div>
+        <div class="admin-table-container">
+            <table class="admin-table vote-list-table">
+                <thead>
+                    <tr><th>ID</th><th>User ID</th><th>Option ID</th><th>Дата</th><th class="actions-cell">Действия</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td><td>101</td><td>1</td><td>2026-04-03</td>
+                        <td class="actions-cell">
+                            <a href="#" class="btn-edit">Ред.</a>
+                            <a href="#" class="btn-delete">Удалить</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <hr>
+
+    <section class="admin-section">
+        <h2>5. Управление пользователями</h2>
+        <div class="card-form">
+            <h3>Создать нового пользователя</h3>
+            <form action="/add_user" method="POST">
+                <input type="text" name="username" placeholder="Логин" required>
+                <input type="password" name="password" placeholder="Пароль" required>
+                <select name="role">
+                    <option value="User">User (Пользователь)</option>
+                    <option value="Admin">Admin (Администратор)</option>
+                </select>
+                <button type="submit" class="btn" style="background-color: #2ecc71;">Зарегистрировать</button>
+            </form>
+        </div>
+        
+        <div class="admin-table-container">
+<table class="admin-table user-list-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Логин (Username)</th>
+                    <th>Роль (Role)</th>
+                    <th style="text-align: right;">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>101</td>
+                    <td>ivanov_python</td>
+                    <td><span class="role-badge user">User</span></td>
+                    <td style="text-align: right;">
+                        <a href="/edit_user/101" class="btn-edit">Ред.</a>
+                        <a href="/delete_user/101" class="btn-delete" onclick="return confirm('Вы уверены?')">Удалить</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>102</td>
+                    <td>admin_boss</td>
+                    <td><span class="role-badge admin">Admin</span></td>
+                    <td style="text-align: right;">
+                        <a href="/edit_user/102" class="btn-edit">Ред.</a>
+                        <a href="/delete_user/102" class="btn-delete" onclick="return confirm('Вы уверены?')">Удалить</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; Все права защищены, 2026</p>
+    </footer>
+
+    <!-- Модальное окно Профиля -->
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('profileModal')">&times;</span>
+        <h2>Мой профиль</h2>
+        <form id="profileForm">
+            <label>Логин:</label>
+            <input type="text" id="profileUser" required>
+            
+            <label>Новый пароль (оставьте пустым, если не хотите менять):</label>
+            <input type="password" id="profilePass" placeholder="••••••••">
+            
+            <button type="submit" class="btn" style="background-color: #f39c12;">Сохранить изменения</button>
+        </form>
+    </div>
+</div>
+
+    <script src = "../js/regLog.js"></script>
+    <script src="../js/changeDataAccount.js"></script>
+</body>
+</html>
