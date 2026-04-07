@@ -13,6 +13,10 @@ body {
     color: var(--text-color);
     margin: 0;
     line-height: 1.6;
+    height: 100px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
@@ -178,6 +182,7 @@ footer {
     padding: 2rem;
     color: #888;
     font-size: 0.8rem;
+    margin-top: auto; 
 }
 
 

@@ -1,4 +1,3 @@
-// Открытие модалки профиля
 document.getElementById('userNameDisplay').addEventListener('click', () => {
     const user = JSON.parse(localStorage.getItem('userSession'));
     if (user) {
@@ -8,7 +7,6 @@ document.getElementById('userNameDisplay').addEventListener('click', () => {
     }
 });
 
-// Сохранение изменений
 document.getElementById('profileForm').onsubmit = async function(e) {
     e.preventDefault();
     const newName = document.getElementById('profileUser').value;

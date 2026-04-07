@@ -16,7 +16,6 @@ window.addEventListener('DOMContentLoaded', () => {
     if (user) {
         nameDisplay.innerText = "Привет, " + user.name + "!";
         authBtn.innerText = "Выйти";
-        // Показываем кнопку админки, если роль Admin
         if (user.role === 'Admin' && adminBtn) adminBtn.style.display = "inline-block";
     } else {
         nameDisplay.innerText = "Привет, Гость!";
@@ -25,7 +24,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Кнопка Войти/Выйти
 function handleAuthClick() {
     if (localStorage.getItem('userSession')) {
         if (confirm('Выйти из аккаунта?')) {
@@ -37,7 +35,6 @@ function handleAuthClick() {
     }
 }
 
-// ВХОД
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.onsubmit = async function(e) {
@@ -54,7 +51,7 @@ if (loginForm) {
             const data = await response.json();
 
             if (response.ok) {
-                localStorage.setItem('userSession', JSON.stringify({ name: data.name, role: data.role }));
+                localStorage.setItem('userSession', JSON.stringify({ id: data.id, name: data.name, role: data.role }));
                 location.reload();
             } else {
                 alert("Ошибка: " + data.error);
@@ -65,7 +62,6 @@ if (loginForm) {
     };
 }
 
-// РЕГИСТРАЦИЯ
 const regForm = document.getElementById('regForm');
 if (regForm) {
     regForm.onsubmit = async function(e) {
@@ -94,7 +90,6 @@ if (regForm) {
     };
 }
 
-// ЗАГРУЗКА ПОЛЬЗОВАТЕЛЕЙ
 async function loadUsersToAdminTable() {
     const tableBody = document.querySelector('.user-list-table tbody');
     if (!tableBody) return;
