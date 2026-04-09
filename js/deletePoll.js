@@ -1,6 +1,12 @@
+let isPollsLoaded = false;
+
 async function loadAdminPolls() {
+    if (isPollsLoaded) return;
+    isPollsLoaded = true;
+
     const grid = document.querySelector('.admin-polls-view');
     if (!grid) return;
+        await new Promise(resolve => setTimeout(resolve, 1000));
 
     try {
         grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">Загрузка опросов...</p>';
@@ -89,4 +95,3 @@ async function confirmDeletePoll(id) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadAdminPolls);

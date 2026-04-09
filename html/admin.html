@@ -79,7 +79,7 @@
                 </form>
             </div>
 
-                        <div class="admin-table-container">
+            <div class="admin-table-container">
                 <table class="admin-table user-list-table">
                     <thead>
                         <tr>
@@ -115,14 +115,14 @@
             </div>
         </section>
 
-            <hr>
+        <hr>
 
-            <section class="admin-section">
-                <h2>Все активные опросы</h2>
-                <div class="grid admin-polls-view">
-                    <p style="text-align: center; grid-column: 1/-1;">Загрузка данных...</p>
-                </div>
-            </section>
+        <section class="admin-section">
+            <h2>Все активные опросы</h2>
+            <div class="grid admin-polls-view">
+                <p style="text-align: center; grid-column: 1/-1;">Загрузка данных...</p>
+            </div>
+        </section>
 
     </main>
 
@@ -167,10 +167,31 @@
     <script src="../js/regLog.js"></script>
     <script src="../js/changeDataAccount.js"></script>
     <script src="../js/addPoll.js"></script>
-    <script src="../js/deletePoll.js"></script>
-    <script src="../js/loadUser.js"></script>
     <script src="../js/actionsUser.js"></script>
     <script src="../js/addUser.js"></script>
+    <script src="../js/deletePoll.js"></script>
+    <script>
+        let adminInitialized = false;
+
+        async function startAdminPanel() {
+            if (adminInitialized) return;
+            adminInitialized = true;
+
+            console.log("Запуск очереди...");
+            try {
+                await loadUsersTable();
+                await new Promise(r => setTimeout(r, 700));
+                if (typeof fillPollSuggestions === 'function') await fillPollSuggestions();
+                await new Promise(r => setTimeout(r, 900));
+                if (typeof loadAdminPolls === 'function') await loadAdminPolls();
+            } catch (e) {
+                console.error(e);
+                adminInitialized = false;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', startAdminPanel);
+    </script>
 </body>
 
 </html>

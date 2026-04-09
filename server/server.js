@@ -45,14 +45,6 @@ if (require.main === module) {
 
 module.exports = app; 
 
-async function warmUpDB() {
-    try {
-        await db.query('SELECT COUNT(*) FROM [Users]');
-    } catch (err) {
-        setTimeout(warmUpDB, 1000);
-    }
-}
-warmUpDB();
 
 
 

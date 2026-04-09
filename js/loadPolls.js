@@ -1,6 +1,12 @@
+let isPollsLoaded = false;
+
 async function loadPolls() {
+    if (isPollsLoaded) return;
+
     const grid = document.querySelector('.grid');
     if (!grid) return;
+
+    isPollsLoaded = true;
 
     try {
         const user = JSON.parse(localStorage.getItem('userSession'));
@@ -57,7 +63,6 @@ async function loadPolls() {
         });
     } catch (err) {
         console.error("Ошибка отрисовки:", err);
+        isPollsLoaded = false;
     }
 }
-
-document.addEventListener('DOMContentLoaded', loadPolls);
