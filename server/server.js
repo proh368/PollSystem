@@ -5,6 +5,7 @@ const express = require('express');
 const db = require('./db');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const { validateUser } = require('../js/validator'); 
 
 const app = express();
 
@@ -34,15 +35,27 @@ app.get('/api/users', async (req, res) => {
 });
 
 const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Сервер: http://localhost:${PORT}`);
-});
+
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Сервер запущен: http://localhost:${PORT}`);
+    });
+}
+
+module.exports = app; 
+
+async function warmUpDB() {
+    try {
+        await db.query('SELECT COUNT(*) FROM [Users]');
+    } catch (err) {
+        setTimeout(warmUpDB, 1000);
+    }
+}
+warmUpDB();
 
 
 
-
-
-app.post('/api/register', async (req, res) => {
+app.post('/api/register', validateUser, async (req, res) => {
     const { username, password, role } = req.body; 
     
     try {
