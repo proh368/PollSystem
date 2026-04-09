@@ -24,6 +24,18 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+if (window.location.pathname.includes('admin.html')) {
+    const user = JSON.parse(localStorage.getItem('userSession'));
+    
+    if (!user || user.role !== 'Admin') {
+        alert("Доступ запрещен! У вас нет прав администратора.");
+        window.location.href = '/';
+    }
+}
+
+
+
 function handleAuthClick() {
     if (localStorage.getItem('userSession')) {
         if (confirm('Выйти из аккаунта?')) {
