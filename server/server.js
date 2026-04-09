@@ -18,10 +18,11 @@ app.use(morgan('dev'));
 
 app.use('/css', express.static(path.join(__dirname, '..', 'css')));
 app.use('/js', express.static(path.join(__dirname, '..', 'js')));
-app.use(express.static(path.join(__dirname, '..', 'html')));
+app.use('/html', express.static(path.join(__dirname, '..', 'html')));
 
+// Маршруты для выдачи файлов
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'html', 'user.html'));
+    res.sendFile(path.join(__dirname, '..', 'user.html'));
 });
 
 app.get('/api/users', async (req, res) => {

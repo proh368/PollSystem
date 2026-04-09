@@ -14,7 +14,7 @@
         <nav>
             <div class="logo">Панель администратора</div>
             <div class="user-info">
-                <a href="user.html" class="admin-link" style="background-color: #2ecc71;">На сайт</a>
+                <a href="/" class="admin-link" style="background-color: #2ecc71;">На сайт</a>
                 <span id="userNameDisplay" onclick="openModal('profileModal')"
                     style="cursor:pointer; text-decoration: underline;">Привет, Гость!</span>
             </div>
@@ -65,15 +65,6 @@
         <hr>
 
         <section class="admin-section">
-            <h2>Все активные опросы</h2>
-            <div class="grid admin-polls-view">
-                <p style="text-align: center; grid-column: 1/-1;">Загрузка данных...</p>
-            </div>
-        </section>
-
-        <hr>
-
-        <section class="admin-section">
             <h2>Управление пользователями</h2>
             <div class="card-form">
                 <h3>Создать нового пользователя</h3>
@@ -88,7 +79,7 @@
                 </form>
             </div>
 
-            <div class="admin-table-container">
+                        <div class="admin-table-container">
                 <table class="admin-table user-list-table">
                     <thead>
                         <tr>
@@ -123,6 +114,15 @@
                 </table>
             </div>
         </section>
+
+            <hr>
+
+            <section class="admin-section">
+                <h2>Все активные опросы</h2>
+                <div class="grid admin-polls-view">
+                    <p style="text-align: center; grid-column: 1/-1;">Загрузка данных...</p>
+                </div>
+            </section>
 
     </main>
 
